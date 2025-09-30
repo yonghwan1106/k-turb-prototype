@@ -38,3 +38,19 @@ export interface TurbulenceLevel {
   color: string
   description: string
 }
+
+export interface AirportWeather {
+  code: string
+  name: string
+  weather: {
+    temp: number
+    windSpeed: number
+    windDirection: number
+    visibility: number
+    ceiling: number
+  }
+  turbulence: {
+    current: number // 0-100
+    forecast: { time: Date; level: number }[]
+  }
+}

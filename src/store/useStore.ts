@@ -10,7 +10,7 @@ interface AppState {
   selectedAirport: string | null
 
   setSelectedTime: (time: Date) => void
-  setTimeOffset: (offset: number) => void
+  setTimeOffset: (offset: number | ((prev: number) => number)) => void
   setIsPlaying: (playing: boolean) => void
   setTurbulenceData: (data: TurbulenceData[]) => void
   setSelectedAltitude: (altitude: number) => void
@@ -26,7 +26,9 @@ export const useStore = create<AppState>((set) => ({
   selectedAirport: null,
 
   setSelectedTime: (time) => set({ selectedTime: time }),
-  setTimeOffset: (offset) => set({ timeOffset: offset }),
+  setTimeOffset: (offset) => set((state) => ({
+    timeOffset: typeof offset === 'function' ? offset(state.timeOffset) : offset
+  })),
   setIsPlaying: (playing) => set({ isPlaying: playing }),
   setTurbulenceData: (data) => set({ turbulenceData: data }),
   setSelectedAltitude: (altitude) => set({ selectedAltitude: altitude }),

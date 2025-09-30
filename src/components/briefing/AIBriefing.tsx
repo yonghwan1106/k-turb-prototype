@@ -53,22 +53,24 @@ export default function AIBriefing() {
   }
 
   return (
-    <div className="bg-white rounded-lg p-6 shadow-md">
-      <div className="flex items-center gap-2 mb-4">
-        <Sparkles className="w-6 h-6 text-yellow-500" />
+    <div className="bg-gradient-to-br from-white to-gray-50 rounded-xl p-6 shadow-lg border border-gray-200">
+      <div className="flex items-center gap-2 mb-6">
+        <div className="bg-gradient-to-br from-yellow-400 to-orange-500 p-2 rounded-lg">
+          <Sparkles className="w-5 h-5 text-white" />
+        </div>
         <h3 className="text-xl font-bold text-gray-900">AI 기상 브리핑</h3>
       </div>
 
-      <div className="space-y-4 mb-4">
+      <div className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
               출발지
             </label>
             <select
               value={departure}
               onChange={(e) => setDeparture(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-turb-blue"
+              className="w-full px-4 py-2.5 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-turb-blue focus:border-turb-blue bg-white text-gray-900 font-medium"
             >
               <option value="ICN">인천 (ICN)</option>
               <option value="GMP">김포 (GMP)</option>
@@ -78,13 +80,13 @@ export default function AIBriefing() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
               도착지
             </label>
             <select
               value={arrival}
               onChange={(e) => setArrival(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-turb-blue"
+              className="w-full px-4 py-2.5 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-turb-blue focus:border-turb-blue bg-white text-gray-900 font-medium"
             >
               <option value="CJU">제주 (CJU)</option>
               <option value="ICN">인천 (ICN)</option>
@@ -97,16 +99,16 @@ export default function AIBriefing() {
         <button
           onClick={generateBriefing}
           disabled={loading}
-          className="w-full bg-turb-blue hover:bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full bg-gradient-to-r from-turb-blue to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-lg"
         >
           {loading ? (
             <>
-              <Loader2 className="w-5 h-5 animate-spin" />
+              <Loader2 className="w-6 h-6 animate-spin" />
               브리핑 생성 중...
             </>
           ) : (
             <>
-              <Plane className="w-5 h-5" />
+              <Plane className="w-6 h-6" />
               브리핑 생성
             </>
           )}
@@ -114,9 +116,9 @@ export default function AIBriefing() {
       </div>
 
       {briefing && (
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200">
+        <div className="mt-6 bg-gradient-to-br from-blue-50 to-indigo-50 p-5 rounded-xl border-2 border-blue-200 shadow-inner">
           <div className="prose prose-sm max-w-none">
-            <div className="whitespace-pre-wrap text-gray-800 leading-relaxed">
+            <div className="whitespace-pre-wrap text-gray-800 leading-relaxed text-sm">
               {briefing}
             </div>
           </div>
@@ -124,9 +126,9 @@ export default function AIBriefing() {
       )}
 
       {!briefing && !loading && (
-        <div className="text-center text-gray-400 py-8">
-          <Plane className="w-12 h-12 mx-auto mb-2 opacity-50" />
-          <p className="text-sm">항로를 선택하고 브리핑을 생성해보세요</p>
+        <div className="mt-6 text-center text-gray-400 py-8 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300">
+          <Plane className="w-12 h-12 mx-auto mb-3 opacity-40" />
+          <p className="text-sm font-medium">항로를 선택하고 브리핑을 생성해보세요</p>
         </div>
       )}
     </div>
