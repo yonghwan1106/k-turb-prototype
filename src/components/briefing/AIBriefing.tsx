@@ -120,9 +120,17 @@ export default function AIBriefing() {
       {briefing && (
         <div className="mt-6 bg-gradient-to-br from-blue-50 to-indigo-50 p-5 rounded-xl border-2 border-blue-200 shadow-inner">
           <div className="prose prose-sm max-w-none">
-            <div className="whitespace-pre-wrap text-gray-800 leading-relaxed text-sm">
-              {briefing}
-            </div>
+            <div
+              className="whitespace-pre-wrap text-gray-800 leading-relaxed text-sm"
+              dangerouslySetInnerHTML={{
+                __html: briefing
+                  .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                  .replace(/^### (.*$)/gim, '<h3 class="text-lg font-bold mt-4 mb-2">$1</h3>')
+                  .replace(/^## (.*$)/gim, '<h2 class="text-xl font-bold mt-4 mb-2">$1</h2>')
+                  .replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold mt-4 mb-2">$1</h1>')
+                  .replace(/\n/g, '<br>')
+              }}
+            />
           </div>
         </div>
       )}
