@@ -212,7 +212,7 @@ function AnimatedAirportMarker({
     if (groupRef.current) {
       groupRef.current.rotation.y = state.clock.elapsedTime * 0.5
     }
-    if (beamRef.current) {
+    if (beamRef.current && beamRef.current.material && !Array.isArray(beamRef.current.material)) {
       beamRef.current.material.opacity = 0.3 + Math.sin(state.clock.elapsedTime * 2) * 0.2
     }
   })

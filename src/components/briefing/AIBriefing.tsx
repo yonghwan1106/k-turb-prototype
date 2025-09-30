@@ -32,19 +32,21 @@ export default function AIBriefing() {
         return
       }
 
-      // 타이핑 효과
+      // 타이핑 효과 (더 빠르게)
       const text = data.briefing
       let index = 0
 
       const interval = setInterval(() => {
         if (index < text.length) {
-          setBriefing((prev) => prev + text[index])
-          index++
+          // 한 번에 3글자씩 추가하여 3배 빠르게
+          const chunk = text.substring(index, index + 3)
+          setBriefing((prev) => prev + chunk)
+          index += 3
         } else {
           clearInterval(interval)
           setLoading(false)
         }
-      }, 20)
+      }, 10)
     } catch (error) {
       console.error(error)
       setBriefing('브리핑 생성 중 오류가 발생했습니다.')
