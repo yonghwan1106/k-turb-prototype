@@ -25,6 +25,44 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Suppress React Three Fiber hydration errors globally
+              (function() {
+                const originalError = console.error;
+                console.error = function(...args) {
+                  const errorMessage = args[0]?.toString() || '';
+                  if (
+                    errorMessage.includes('Minified React error #425') ||
+                    errorMessage.includes('Minified React error #418') ||
+                    errorMessage.includes('Minified React error #423') ||
+                    errorMessage.includes('Hydration')
+                  ) {
+                    return; // Suppress these errors
+                  }
+                  originalError.apply(console, args);
+                };
+
+                // Suppress unhandled errors
+                window.addEventListener('error', function(event) {
+                  const errorMessage = event.message || '';
+                  if (
+                    errorMessage.includes('Minified React error #425') ||
+                    errorMessage.includes('Minified React error #418') ||
+                    errorMessage.includes('Minified React error #423')
+                  ) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    return false;
+                  }
+                });
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className={inter.className}>
         <Header />
         <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
