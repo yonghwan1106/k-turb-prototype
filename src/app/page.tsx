@@ -5,6 +5,7 @@ import { Suspense } from 'react'
 import TimeSlider from '@/components/dashboard/TimeSlider'
 import AIBriefing from '@/components/briefing/AIBriefing'
 import AirportInfo from '@/components/dashboard/AirportInfo'
+import ErrorBoundary from '@/components/ErrorBoundary'
 import { Activity, AlertTriangle, CheckCircle, CloudRain } from 'lucide-react'
 
 // 3D 컴포넌트는 클라이언트 사이드에서만 렌더링
@@ -86,16 +87,24 @@ export default function Home() {
           {/* 메인 지도 영역 */}
           <div className="lg:col-span-2 space-y-6">
             <div className="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-200" suppressHydrationWarning>
-              <Suspense fallback={
+              <ErrorBoundary fallback={
                 <div className="w-full h-[700px] bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl flex items-center justify-center">
                   <div className="text-center">
-                    <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-turb-blue mx-auto mb-6"></div>
-                    <p className="text-white text-lg font-medium">3D 지도 로딩 중...</p>
+                    <p className="text-white text-lg font-medium">3D 지도를 불러오는 중입니다...</p>
                   </div>
                 </div>
               }>
-                <Korea3DMap />
-              </Suspense>
+                <Suspense fallback={
+                  <div className="w-full h-[700px] bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-turb-blue mx-auto mb-6"></div>
+                      <p className="text-white text-lg font-medium">3D 지도 로딩 중...</p>
+                    </div>
+                  </div>
+                }>
+                  <Korea3DMap />
+                </Suspense>
+              </ErrorBoundary>
             </div>
             <TimeSlider />
           </div>
