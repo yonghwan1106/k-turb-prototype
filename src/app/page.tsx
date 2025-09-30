@@ -1,4 +1,7 @@
+'use client'
+
 import dynamic from 'next/dynamic'
+import { Suspense } from 'react'
 import TimeSlider from '@/components/dashboard/TimeSlider'
 import AIBriefing from '@/components/briefing/AIBriefing'
 import AirportInfo from '@/components/dashboard/AirportInfo'
@@ -82,8 +85,17 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* 메인 지도 영역 */}
           <div className="lg:col-span-2 space-y-6">
-            <div className="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-200">
-              <Korea3DMap />
+            <div className="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-200" suppressHydrationWarning>
+              <Suspense fallback={
+                <div className="w-full h-[700px] bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-turb-blue mx-auto mb-6"></div>
+                    <p className="text-white text-lg font-medium">3D 지도 로딩 중...</p>
+                  </div>
+                </div>
+              }>
+                <Korea3DMap />
+              </Suspense>
             </div>
             <TimeSlider />
           </div>
